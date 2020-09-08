@@ -11,9 +11,11 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn install
+      - printf '[{"name":"MyService","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/myservice/app:latest > imagedefinitions.json
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
     - target/spring-boot-web-jsp-1.0.war
+    - imagedefinitions.json
